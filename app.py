@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import streamlit.components.v1 as components
+from datetime import date
 
 st.set_page_config(
     page_title="De la Chueca a la Gloria",
@@ -97,12 +98,24 @@ div.stButton > button:hover {
     text-align: center;
     box-shadow: 0 18px 55px rgba(0,0,0,.35);
 }
+
+.certificate {
+    background: linear-gradient(145deg, #f8fafc, #dbeafe);
+    color: #0f172a;
+    border: 4px double #1d4ed8;
+    border-radius: 24px;
+    padding: 36px;
+    text-align: center;
+    margin-top: 24px;
+}
+
+.certificate h1, .certificate h2, .certificate h3, .certificate p {
+    color: #0f172a;
+}
 </style>
 """, unsafe_allow_html=True)
 
-# -------------------------
 # Estado
-# -------------------------
 if "inicio" not in st.session_state:
     st.session_state.inicio = False
 if "preguntas" not in st.session_state:
@@ -115,6 +128,8 @@ if "respondido" not in st.session_state:
     st.session_state.respondido = False
 if "respuesta_usuario" not in st.session_state:
     st.session_state.respuesta_usuario = None
+if "animacion_inicio" not in st.session_state:
+    st.session_state.animacion_inicio = False
 
 
 # -------------------------
@@ -126,111 +141,121 @@ if not st.session_state.inicio:
     with col1:
         components.html("""
         <div style="
-            min-height:680px;
-            border-radius:28px;
+            min-height:700px;
+            border-radius:30px;
             padding:30px;
             color:white;
             font-family:Arial, sans-serif;
             text-align:center;
+            position:relative;
+            overflow:hidden;
             background:
-                linear-gradient(rgba(5,20,38,.76), rgba(5,20,38,.94)),
-                radial-gradient(circle at 20% 15%, rgba(116,172,223,.35), transparent 35%),
-                radial-gradient(circle at 80% 75%, rgba(29,161,242,.25), transparent 38%),
+                linear-gradient(rgba(5,20,38,.78), rgba(5,20,38,.96)),
+                radial-gradient(circle at 15% 18%, rgba(116,172,223,.35), transparent 28%),
+                radial-gradient(circle at 80% 80%, rgba(29,161,242,.25), transparent 34%),
                 linear-gradient(145deg, #16395f, #07111f);
             border:1px solid rgba(116,172,223,.28);
             box-shadow:0 20px 60px rgba(0,0,0,.45);
         ">
-            <div style="text-align:right;">
-                <span style="
-                    border:1px solid rgba(255,255,255,.25);
-                    padding:9px 16px;
-                    border-radius:14px;
+            <div style="position:absolute; inset:0; opacity:.16; font-size:72px; line-height:1.8;">
+                🐎 &nbsp;&nbsp;&nbsp;&nbsp; ⚽ &nbsp;&nbsp;&nbsp;&nbsp; 🥇<br>
+                &nbsp;&nbsp;&nbsp; 🏎️ &nbsp;&nbsp;&nbsp;&nbsp; 🚣 &nbsp;&nbsp;&nbsp;&nbsp; 🇦🇷<br>
+                🐎 &nbsp;&nbsp;&nbsp;&nbsp; 🏆 &nbsp;&nbsp;&nbsp;&nbsp; ⚽
+            </div>
+
+            <div style="position:relative; z-index:2;">
+                <div style="text-align:right;">
+                    <span style="
+                        border:1px solid rgba(255,255,255,.25);
+                        padding:9px 16px;
+                        border-radius:14px;
+                        color:#dbeafe;
+                        font-size:15px;
+                    ">ⓘ Acerca de esta trivia</span>
+                </div>
+
+                <div style="font-size:52px;margin-top:12px;">🇦🇷</div>
+
+                <h1 style="
+                    font-size:58px;
+                    line-height:1.05;
+                    margin:14px 0 10px;
+                    font-weight:900;
+                ">
+                    De la Chueca<br>
+                    <span style="color:#74ACDF;">a la Gloria</span>
+                </h1>
+
+                <p style="font-size:20px;color:#dbeafe;line-height:1.4;margin:18px 0;">
+                    Desde los juegos originarios hasta las hazañas olímpicas.<br>
+                    Descubrí cómo el deporte ayudó a construir identidad argentina.
+                </p>
+
+                <div style="
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    gap:14px;
+                    margin:22px 0;
+                    font-size:28px;
+                ">
+                    🏹 <span style="color:#74ACDF;">→</span> 🐎 <span style="color:#74ACDF;">→</span> ⚽ <span style="color:#74ACDF;">→</span> 🥇 <span style="color:#74ACDF;">→</span> 🏆
+                </div>
+
+                <div style="
+                    display:grid;
+                    grid-template-columns:repeat(4,1fr);
+                    gap:10px;
+                    margin:22px 0;
+                    border:1px solid rgba(255,255,255,.16);
+                    border-radius:20px;
+                    padding:15px;
+                    background:rgba(255,255,255,.06);
+                ">
+                    <div>
+                        <div style="font-size:30px;">🐎</div>
+                        <div style="font-size:14px;">Pato y juegos<br>originarios</div>
+                    </div>
+                    <div>
+                        <div style="font-size:30px;">⚽</div>
+                        <div style="font-size:14px;">Fútbol, clubes<br>e identidad</div>
+                    </div>
+                    <div>
+                        <div style="font-size:30px;">🥇</div>
+                        <div style="font-size:14px;">Juegos Olímpicos<br>y hazañas</div>
+                    </div>
+                    <div>
+                        <div style="font-size:30px;">🕊️</div>
+                        <div style="font-size:14px;">Mundial 1978<br>y memoria</div>
+                    </div>
+                </div>
+
+                <p style="font-size:17px;color:#e5eefc;line-height:1.45;">
+                    Poné a prueba tus conocimientos sobre los momentos, protagonistas
+                    y hechos que marcaron la historia del deporte en Argentina.
+                </p>
+
+                <div style="
+                    margin:22px auto 0;
+                    max-width:560px;
+                    padding:15px;
+                    border-radius:18px;
+                    background:rgba(0,0,0,.22);
+                    border:1px solid rgba(255,255,255,.16);
                     color:#dbeafe;
                     font-size:15px;
-                ">ⓘ Acerca de esta trivia</span>
-            </div>
-
-            <div style="font-size:52px;margin-top:12px;">🇦🇷</div>
-
-            <h1 style="
-                font-size:58px;
-                line-height:1.05;
-                margin:14px 0 10px;
-                font-weight:900;
-            ">
-                De la Chueca<br>
-                <span style="color:#74ACDF;">a la Gloria</span>
-            </h1>
-
-            <p style="font-size:20px;color:#dbeafe;line-height:1.4;margin:18px 0;">
-                Un recorrido interactivo por la historia<br>
-                del deporte argentino
-            </p>
-
-            <div style="
-                display:flex;
-                justify-content:center;
-                align-items:center;
-                gap:14px;
-                margin:22px 0;
-                font-size:28px;
-            ">
-                🏹 <span style="color:#74ACDF;">→</span> 🐎 <span style="color:#74ACDF;">→</span> ⚽ <span style="color:#74ACDF;">→</span> 🥇 <span style="color:#74ACDF;">→</span> 🏆
-            </div>
-
-            <div style="
-                display:grid;
-                grid-template-columns:repeat(4,1fr);
-                gap:10px;
-                margin:22px 0;
-                border:1px solid rgba(255,255,255,.16);
-                border-radius:20px;
-                padding:15px;
-                background:rgba(255,255,255,.06);
-            ">
-                <div>
-                    <div style="font-size:30px;">🏃‍♂️</div>
-                    <div style="font-size:14px;">Pueblos<br>originarios</div>
+                ">
+                    📚 10 preguntas · 🏆 medalla final · 📜 certificado simbólico<br>
+                    <span style="color:#38bdf8;">¡Muchos éxitos!</span>
                 </div>
-                <div>
-                    <div style="font-size:30px;">🏆</div>
-                    <div style="font-size:14px;">Clubes e<br>instituciones</div>
-                </div>
-                <div>
-                    <div style="font-size:30px;">🥇</div>
-                    <div style="font-size:14px;">Juegos Olímpicos<br>y hazañas</div>
-                </div>
-                <div>
-                    <div style="font-size:30px;">🕊️</div>
-                    <div style="font-size:14px;">Mundial 1978<br>y memoria</div>
-                </div>
-            </div>
-
-            <p style="font-size:17px;color:#e5eefc;line-height:1.45;">
-                Poné a prueba tus conocimientos sobre los momentos, protagonistas
-                y hechos que marcaron la historia del deporte en Argentina.
-            </p>
-
-            <div style="
-                margin:22px auto 0;
-                max-width:560px;
-                padding:15px;
-                border-radius:18px;
-                background:rgba(0,0,0,.18);
-                border:1px solid rgba(255,255,255,.16);
-                color:#dbeafe;
-                font-size:15px;
-            ">
-                💡 Cada pregunta incluye una explicación para que sigas aprendiendo.<br>
-                <span style="color:#38bdf8;">¡Muchos éxitos!</span>
             </div>
         </div>
-        """, height=700)
+        """, height=720)
 
     with col2:
         components.html("""
         <div style="
-            min-height:620px;
+            min-height:650px;
             border-radius:28px;
             padding:32px;
             color:white;
@@ -270,7 +295,7 @@ if not st.session_state.inicio:
                 "></div>
             </div>
 
-            <p style="text-align:center;color:#cbd5e1;font-size:18px;">Pregunta 1 de 10</p>
+            <p style="text-align:center;color:#cbd5e1;font-size:18px;">Vista previa del desafío</p>
 
             <div style="
                 background:linear-gradient(145deg, rgba(19,48,80,.96), rgba(7,20,38,.98));
@@ -315,12 +340,13 @@ if not st.session_state.inicio:
                 como el Palin y el Pato, y los deportes introducidos por los ingleses.
             </div>
         </div>
-        """, height=700)
+        """, height=720)
 
         st.write("")
 
         if st.button("🚀 Comenzar recorrido", use_container_width=True):
             st.session_state.inicio = True
+            st.session_state.animacion_inicio = True
             st.toast("¡Comienza el desafío! 🇦🇷🏆")
             st.rerun()
 
@@ -329,6 +355,10 @@ if not st.session_state.inicio:
 # Juego
 # -------------------------
 else:
+    if st.session_state.animacion_inicio:
+        st.balloons()
+        st.session_state.animacion_inicio = False
+
     total = len(st.session_state.preguntas)
     indice = st.session_state.indice
 
@@ -391,7 +421,12 @@ else:
                 else:
                     st.error(f"❌ Incorrecto. La respuesta correcta era: {correcta}")
 
-                st.info(f"📚 {pregunta_actual['explicacion']}")
+                st.markdown(f"""
+<div class="info-box">
+    <h3>📖 Curiosidad histórica</h3>
+    {pregunta_actual['explicacion']}
+</div>
+""", unsafe_allow_html=True)
 
                 if st.button("Siguiente pregunta ➡️", use_container_width=True):
                     st.session_state.indice += 1
@@ -421,7 +456,7 @@ else:
         with col2:
             st.markdown("""
 <div class="final-box">
-    <div style="font-size:56px;">🏁</div>
+    <div style="font-size:64px;">🏁</div>
     <h1>Resultado final</h1>
 </div>
 """, unsafe_allow_html=True)
@@ -431,29 +466,80 @@ else:
             c2.metric("Porcentaje de aciertos", f"{porcentaje}%")
 
             if puntaje <= 4:
-                nivel = "🏹 Exploradora de los Orígenes"
+                medalla = "🥉"
+                nivel = "Exploradora de los Orígenes"
                 mensaje = "Conocés algunos puntos de partida, pero todavía queda mucho recorrido histórico por descubrir."
-            elif puntaje <= 8:
-                nivel = "🥈 Cronista del Deporte Argentino"
-                mensaje = "Tenés una muy buena base para interpretar hechos, protagonistas e instituciones."
+            elif puntaje <= 7:
+                medalla = "🥈"
+                nivel = "Cronista del Deporte Argentino"
+                mensaje = "Tenés una buena base para interpretar hechos, protagonistas e instituciones."
             elif puntaje < total:
-                nivel = "🏆 Guardiana de la Historia Deportiva"
+                medalla = "🥇"
+                nivel = "Guardiana de la Historia Deportiva"
                 mensaje = "Dominás gran parte del recorrido histórico del deporte argentino."
             else:
-                nivel = "👑 Leyenda de la Chueca a la Gloria"
+                medalla = "👑"
+                nivel = "Leyenda de la Chueca a la Gloria"
                 mensaje = "¡Puntaje perfecto! Conocés los hitos principales de la historia deportiva nacional."
 
-            st.success(f"Tu nivel: {nivel}")
+            st.markdown(f"""
+<div class="final-box">
+    <div style="font-size:72px;">{medalla}</div>
+    <h2>{nivel}</h2>
+    <p>{mensaje}</p>
+</div>
+""", unsafe_allow_html=True)
 
             st.markdown(f"""
 <div class="info-box">
     <h3>Reflexión final</h3>
-    <p>{mensaje}</p>
     La historia del deporte argentino no es solo una historia de resultados.
     También habla de identidad, instituciones, política, memoria, género,
     clase social y cultura popular.
 </div>
 """, unsafe_allow_html=True)
+
+            nombre = st.text_input("Nombre para el certificado:", value="Florencia Sosa Comisso")
+
+            certificado = f"""
+CERTIFICADO DE CONOCIMIENTO
+
+De la Chueca a la Gloria
+
+Se certifica que {nombre}
+obtuvo {puntaje}/{total} puntos ({porcentaje}%)
+alcanzando el nivel:
+
+{medalla} {nivel}
+
+Por su participación en la trivia interactiva sobre
+la Historia del Deporte Argentino.
+
+Fecha: {date.today().strftime('%d/%m/%Y')}
+"""
+
+            st.markdown(f"""
+<div class="certificate">
+    <div style="font-size:48px;">🇦🇷</div>
+    <h1>Certificado de Conocimiento</h1>
+    <h2>De la Chueca a la Gloria</h2>
+    <p>Se certifica que:</p>
+    <h2>{nombre}</h2>
+    <p>obtuvo:</p>
+    <h2>{medalla} {puntaje}/{total} puntos</h2>
+    <h3>{nivel}</h3>
+    <p>por su participación en la trivia interactiva sobre la Historia del Deporte Argentino.</p>
+    <p><strong>Fecha:</strong> {date.today().strftime('%d/%m/%Y')}</p>
+</div>
+""", unsafe_allow_html=True)
+
+            st.download_button(
+                label="📥 Descargar certificado",
+                data=certificado,
+                file_name="certificado_de_la_chueca_a_la_gloria.txt",
+                mime="text/plain",
+                use_container_width=True
+            )
 
             if st.button("🔄 Reiniciar trivia", use_container_width=True):
                 st.session_state.inicio = False
@@ -462,4 +548,5 @@ else:
                 st.session_state.puntaje = 0
                 st.session_state.respondido = False
                 st.session_state.respuesta_usuario = None
+                st.session_state.animacion_inicio = False
                 st.rerun()
