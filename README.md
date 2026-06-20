@@ -74,3 +74,22 @@ de-la-chueca-a-la-gloria/
 ├── requirements.txt
 └── data/
     └── preguntas.csv
+
+## 🚀 Ejecutar localmente
+pip install -r requirements.txt
+streamlit run app.py
+
+## 📚 Fuentes
+Material de Historia de la Cultura y Problemática Contemporánea.
+Identidad Cultural.
+Confederación Argentina de Deportes.
+AA Deporte.
+Papelitos.
+
+## 👩‍💻 Autora
+
+Florencia Sosa Comisso
+
+Sports Data & Business Analytics
+
+Desarrollado como proyecto educativo y de divulgación sobre la Historia del Deporte Argentino.
